@@ -1,0 +1,198 @@
+/**
+ * Table Horizontal Scroll Helper
+ * SPDX-License-Identifier: MIT
+ */
+.hss-overlay {
+  all: unset;
+  position: fixed;
+  z-index: 2147483646;
+  box-sizing: border-box;
+  pointer-events: none;
+  opacity: 0;
+  border-radius: 0;
+  overflow: visible;
+  transform: translateX(0);
+  transition: opacity 140ms ease;
+}
+
+.hss-overlay.hss-visible {
+  pointer-events: auto;
+  opacity: 1;
+  cursor: pointer;
+}
+
+.hss-overlay .hss-shadow {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 56px;
+  pointer-events: none;
+  opacity: 0.68;
+  transition: opacity 140ms ease, background 140ms ease;
+}
+
+.hss-overlay.hss-left .hss-shadow {
+  left: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(15, 23, 42, 0.18) 0%,
+    rgba(15, 23, 42, 0.13) 20%,
+    rgba(15, 23, 42, 0.07) 48%,
+    rgba(15, 23, 42, 0.025) 76%,
+    rgba(15, 23, 42, 0) 100%
+  );
+}
+
+.hss-overlay.hss-right .hss-shadow {
+  right: 0;
+  background: linear-gradient(
+    270deg,
+    rgba(15, 23, 42, 0.18) 0%,
+    rgba(15, 23, 42, 0.13) 20%,
+    rgba(15, 23, 42, 0.07) 48%,
+    rgba(15, 23, 42, 0.025) 76%,
+    rgba(15, 23, 42, 0) 100%
+  );
+}
+
+.hss-overlay:hover .hss-shadow {
+  opacity: 1;
+}
+
+.hss-overlay.hss-left:hover .hss-shadow {
+  background: linear-gradient(
+    90deg,
+    rgba(50, 91, 154, 0.22) 0%,
+    rgba(50, 91, 154, 0.16) 22%,
+    rgba(50, 91, 154, 0.085) 50%,
+    rgba(50, 91, 154, 0.03) 78%,
+    rgba(50, 91, 154, 0) 100%
+  );
+}
+
+.hss-overlay.hss-right:hover .hss-shadow {
+  background: linear-gradient(
+    270deg,
+    rgba(50, 91, 154, 0.22) 0%,
+    rgba(50, 91, 154, 0.16) 22%,
+    rgba(50, 91, 154, 0.085) 50%,
+    rgba(50, 91, 154, 0.03) 78%,
+    rgba(50, 91, 154, 0) 100%
+  );
+}
+
+.hss-button {
+  all: unset;
+  position: absolute;
+  top: 50%;
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  cursor: pointer;
+  pointer-events: auto;
+  opacity: 0;
+  transform: translate3d(0, -50%, 0) scale(1);
+  transform-origin: center;
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.82), rgba(255, 255, 255, 0.44));
+  border: 1px solid rgba(255, 255, 255, 0.82);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    0 12px 26px rgba(15, 23, 42, 0.18),
+    0 2px 8px rgba(15, 23, 42, 0.12);
+  color: #25508f;
+  backdrop-filter: blur(16px) saturate(1.65);
+  -webkit-backdrop-filter: blur(16px) saturate(1.65);
+  transition:
+    opacity 130ms ease,
+    box-shadow 140ms ease,
+    background-color 140ms ease,
+    border-color 140ms ease;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
+.hss-overlay.hss-left .hss-button {
+  left: 6px;
+}
+
+.hss-overlay.hss-right .hss-button {
+  right: 6px;
+}
+
+.hss-overlay:hover .hss-button {
+  opacity: 1;
+}
+
+.hss-button:hover,
+.hss-button:focus-visible {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.96),
+    0 14px 30px rgba(50, 91, 154, 0.25),
+    0 3px 10px rgba(15, 23, 42, 0.15);
+}
+
+.hss-button:active {
+  transform: translate3d(0, -50%, 0) scale(1);
+}
+
+.hss-icon {
+  width: 24px;
+  height: 24px;
+  display: grid;
+  place-items: center;
+  transform: translate3d(0, 0, 0);
+  transform-origin: center;
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+.hss-icon svg {
+  width: 20px;
+  height: 20px;
+}
+
+.hss-overlay:hover .hss-icon svg {
+  animation-duration: 3600ms;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+
+.hss-overlay.hss-right:hover .hss-icon svg {
+  animation-name: hss-arrow-slide-right;
+}
+
+.hss-overlay.hss-left:hover .hss-icon svg {
+  animation-name: hss-arrow-slide-left;
+}
+
+.hss-button:active .hss-icon svg {
+  animation-play-state: paused;
+}
+
+@keyframes hss-arrow-slide-right {
+  0%, 78%, 100% { transform: translateX(0); }
+  85% { transform: translateX(3px); }
+  93% { transform: translateX(-1px); }
+}
+
+@keyframes hss-arrow-slide-left {
+  0%, 78%, 100% { transform: translateX(0); }
+  85% { transform: translateX(-3px); }
+  93% { transform: translateX(1px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hss-overlay:hover .hss-icon svg {
+    animation: none;
+  }
+}
+
+.hss-icon path {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 3.15;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
