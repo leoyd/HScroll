@@ -1,4 +1,4 @@
-# Table Horizontal Scroll Helper
+# HScroll
 
 Extension Chrome Manifest V3 qui ajoute des contrôles visuels de scroll horizontal aux tableaux et conteneurs scrollables.
 
